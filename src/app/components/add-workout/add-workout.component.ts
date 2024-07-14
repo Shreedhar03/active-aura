@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 
 interface Workout {
   type: string;
@@ -15,44 +16,37 @@ interface UserData {
 @Component({
   selector: 'app-add-workout',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterModule],
   templateUrl: './add-workout.component.html',
   styleUrl: './add-workout.component.css',
 })
 export class AddWorkoutComponent {
   workoutForm = new FormGroup({
-    name: new FormControl(''),
-    duration: new FormControl(''),
-    type: new FormControl('Gym'),
+    name: new FormControl('',[Validators.required]),
+    duration: new FormControl('',[Validators.required]),
+    type: new FormControl('Gym',[Validators.required]),
   });
 
   userData: UserData[] | null = null;
 
+  constructor(private router: Router) {}
   ngOnInit() {
-    const initialData = [
-      {
-        id: 1,
-        name: 'John Doe',
-        workouts: [
-          { type: 'Running', minutes: 30 },
-          { type: 'Cycling', minutes: 45 },
-        ],
-      },
-    ];
-
+    
     const storedData: UserData[] = JSON.parse(
       localStorage.getItem('userData') || '[]'
     );
     this.userData = storedData.length ? storedData : null;
-    if (!this.userData) {
-      localStorage.setItem('userData', JSON.stringify(initialData));
-      this.userData = initialData;
-    } else {
-      this.userData = this.userData;
-    }
+    
+
   }
 
   onSubmit() {
+ 
+    // check if the form is valid
+    if (!this.workoutForm.valid) {
+      return;
+    }
+
     const formValue = this.workoutForm.value;
     console.warn(formValue);
 
@@ -76,5 +70,8 @@ export class AddWorkoutComponent {
     });
 
     localStorage.setItem('userData', JSON.stringify(userData));
+
+    // Redirect to explore page
+    this.router.navigate(['/explore']);
   }
 }
