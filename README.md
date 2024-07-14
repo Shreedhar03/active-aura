@@ -27,3 +27,26 @@ Active Aura is a web application for tracking and exploring workout activities. 
 
 1. On the "Explore" page, click a user's name.
 2. View detailed workout progress for the selected user.
+
+### Run Locally
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/active-aura.git
+   cd active-aura
+   ```
+
+2. Install dependencies
+
+```bash
+   npm install
+```
+
+3. Run the project
+
+```bash
+   npm start
+   ```
+
+4. You can access the project at http://localhost:4200
