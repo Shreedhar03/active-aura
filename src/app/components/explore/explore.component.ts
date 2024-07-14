@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-
 interface Workout {
   type: string;
   minutes: number;
@@ -17,7 +16,7 @@ interface UserData {
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [ReactiveFormsModule,RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css',
 })
@@ -44,8 +43,11 @@ export class ExploreComponent {
     // Retrieve the form values
     const formValue = this.filterForm.value;
     const userData = JSON.parse(localStorage.getItem('userData') || '[]');
-    return userData.filter((user:UserData) => {
-      if (formValue.name && !user.name.toLowerCase().includes(formValue.name.toLowerCase())) {
+    return userData.filter((user: UserData) => {
+      if (
+        formValue.name &&
+        !user.name.toLowerCase().includes(formValue.name.toLowerCase())
+      ) {
         return false;
       }
       // for all workout types
@@ -53,7 +55,9 @@ export class ExploreComponent {
         return true;
       }
       if (formValue.type) {
-        const workouts = user.workouts.filter((workout) => workout.type === formValue.type);
+        const workouts = user.workouts.filter(
+          (workout) => workout.type === formValue.type
+        );
         if (workouts.length === 0) {
           return false;
         }
@@ -62,4 +66,35 @@ export class ExploreComponent {
     });
   }
 
+  // pagination
+  currentPage = 1;
+  itemsPerPage = 2;
+  pageChange(page: number) {
+    this.currentPage = page;
+  }
+
+  prevPage() {
+    this.currentPage--;
+  }
+
+  get totalPages() {
+    return Math.ceil(this.filteredUserData().length / this.itemsPerPage);
+  }
+
+  nextPage() {
+    this.currentPage++;
+  }
+
+  changeItemsPerPage(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    this.itemsPerPage = parseInt(target.value, 10);
+  }
+
+  get paginatedData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredUserData().slice(
+      startIndex,
+      startIndex + this.itemsPerPage
+    );
+  }
 }
