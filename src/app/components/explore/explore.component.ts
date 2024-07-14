@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 
 interface Workout {
@@ -16,7 +17,7 @@ interface UserData {
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css',
 })

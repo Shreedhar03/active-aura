@@ -38,7 +38,7 @@
                 @for (user of filteredUserData(); track $index) {
                     <!-- list the workouts -->
                     <tr class="border border-gray-800 p-3">
-                        <td class="p-3 text-center">{{ user.name }}</td>
+                        <a routerLink="/{{user.name}}" class="p-3 text-center flex items-center justify-center underline">{{ user.name }}</a>
                         <td class="p-3 text-center">{{ getWorkoutTypes(user.workouts) }}</td>
                         <td class="p-3 text-center">{{ user.workouts.length }}</td>
                         <td class="p-3 text-center">{{ getTotalMinutes(user.workouts) }}</td>
