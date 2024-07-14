@@ -1,0 +1,32 @@
+This is Explore page
+
+@for (customer of customers; track $index) {
+<p>
+    {{ customer }}
+</p>
+}
+
+@if (!true) {
+<p>
+    This is true
+</p>
+} @else {
+<p>
+    This is false
+</p>
+}
+
+<form [formGroup]="searchForm">
+    <input type="text" formControlName="search" placeholder="Search">
+</form>
+
+@for (user of filteredData; track $index) {
+<p>
+    {{ user.name }}
+    @for (wo of user.workouts; track $index) {
+<p>
+    {{ wo.type }} : {{ wo.minutes }} minutes
+</p>
+}
+</p>
+}
