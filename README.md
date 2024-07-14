@@ -33,7 +33,7 @@ Active Aura is a web application for tracking and exploring workout activities. 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/active-aura.git
+   git clone https://github.com/shreedhar03/active-aura.git
    cd active-aura
    ```
 
